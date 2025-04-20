@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Family Website</title>
+    <link rel="stylesheet" href="B.jpeg">
+    <style>
+        :root {
+            --primary-color: #35424a;
+            --secondary-color: #e8491d;
+            --accent-color: #ff9a00;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: floralwhite;
+            color: var(--dark-color);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #2c3e50);
+            color: var(--light-color);
+            padding: 30px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=1350') center/cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        header .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: auto;
+            overflow: hidden;
+        }
+        
+        nav {
+            background: var(--secondary-color);
+            color: var(--light-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav ul {
+            padding: 0;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        nav li {
+            padding: 15px 25px;
+            transition: all 0.3s ease;
+        }
+        
+        nav li:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        nav a {
+            color: var(--light-color);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav a i {
+            margin-right: 8px;
+        }
+        
+        section {
+            padding: 40px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        section:last-child {
+            border-bottom: none;
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-gap: 25px;
+            padding: 20px 0;
+        }
+        
+        .photo-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .photo-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .photo-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .photo-info {
+            padding: 15px;
+        }
+        
+        .photo-info h3 {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        
+        .upload-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .upload-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-btn:hover {
+            background-color: #d63c15;
+            transform: translateY(-2px);
+        }
+        
+        #uploadForm {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .chat-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        
+        .user-message {
+            background-color: #e3f2fd;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .other-message {
+            background-color: #f1f1f1;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        #messageInput {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            outline: none;
+        }
+        
+        #sendMessage {
+            padding: 12px 25px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        #sendMessage:hover {
+            background-color: #d63c15;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), #2c3e50);
+            color: var(--light-color);
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            color: var(--light-color);
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            overflow: auto;
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            object-fit: contain;
+            animation: zoom 0.3s;
+        }
+        
+        @keyframes zoom {
+            from {transform: scale(0.5);}
+            to {transform: scale(1);}
+        }
+        
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            nav li {
+                padding: 12px 15px;
+            }
+            
+            .container {
+                width: 90%;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+          /* Button styling */
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, #6c63ff, #3b3ad2);
+      text-decoration: none;
+      border: none;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Hover & focus states */
+    .btn:hover,
+    .btn:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Active state */
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div class="container">
+            <h1>ABARIMBI Family</h1>
+            <p>Celebrating life together</p>
+            <p>Tumenyane</p>
+        </div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="about.html"><i class="fas fa-users"></i> About Us</a></li>
+            <li><a href="#gallery"><i class="fas fa-images"></i> Gallery</a></li>
+            <li><a href="#chat"><i class="fas fa-comments"></i> Family Chat</a></li>
+            <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </nav>
+    <a href="index.html" class="btn">subira inyuma</a>
+    
+    <div class="container">
+        <section id="home">
+            <h2>MURAKAZA NEZA</h2>
+            <p>Aho umuryango wacu ubonera urwibutso. Welcome to our family website where we share our precious moments and stay connected.</p>
+            <p>Our family is our greatest treasure. Through this website, we celebrate our bonds, our history, and our future together.</p>
+        </section>
+   
+        <section id="gallery">
+            <h2>FAMILY Gallery</h2>
+            <p>Browse through our cherished family memories. Click on any photo to view it larger.</p>
+            
+            <div class="gallery" id="familyGallery">
+                <!-- Photos will be added here by JavaScript -->
+            </div>
+            
+            <div class="upload-section">
+                <button class="upload-btn" id="showUploadForm"><i class="fas fa-cloud-upload-alt"></i> Upload Family Photo</button>
+                <form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
+                    <input type="file" name="familyPhoto" id="familyPhoto" accept="image/*" required>
+                    <input type="text" name="photoTitle" placeholder="Photo Title">
+                    <textarea name="photoDescription" placeholder="Photo Description"></textarea>
+                    <button type="submit" class="upload-btn"><i class="fas fa-upload"></i> Submit Photo</button>
+                </form>
+            </div>
+        </section>
+        
+        <section id="chat">
+            <h2>Family Chat</h2>
+            <p>Connect with family members in real-time. Share updates, plan events, or just say hello!</p>
+            
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Chat messages will appear here -->
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="messageInput" placeholder="Type your message here...">
+                    <button id="sendMessage">Send</button>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Reach out to the family through these channels:</p>
+            
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+                <div style="margin: 15px;">
+                    <h3><i class="fas fa-envelope"></i> Email</h3>
+                    <p>gashemadanny2@gmail.com</p>
+                </div>
+                <div style="margin: 15px;">
+                    <h3><i class="fab fa-whatsapp"></i> WhatsApp</h3>
+                    <p>+250 795 595 2534</p>
+                </div>
+                <div style="margin: 15px;">
+                    <h3><i class="fas fa-phone"></i> Phone</h3>
+                    <p>+250 795 595 2534</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+    
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p>&copy; 2025 ABARIMBI Family. All rights reserved.</p>
+        <h4>Copy right @2025 Danny Group Company</h4>
+    </footer>
+    
+    <script>
+        // Family photos data
+        const familyPhotos = [
+            {
+                src: "10.jpeG",
+                title: "Family Reunion 2024",
+                description: "Our annual family gathering at the countryside"
+            },
+            {
+                src: "11.JPEG",
+                title: "Wedding Celebration",
+                description: "Celebrating the marriage of our eldest daughter"
+            },
+            {
+                src: "B.JPEG",
+                title: "Birthday Party",
+                description: "Grandmother's 80th birthday celebration"
+            },
+            {
+                src: "RE.PNG.jpeg",
+                title: "WEEDING DAY",
+                description: "weeding day"
+            },
+            {
+                src: "RT.JPEG",
+                title: "CELEBRATION",
+                description: "BIRTH DAY CELEBRATION"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 7.25.25 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 7.26.31 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 7.34.08 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 7.36.24 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 7.52.04 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 7.52.36 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 7.52.48 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 7.57.00 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 7.58.10 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 7.59.57 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 7.58.31 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 8.01.15 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 8.03.41 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 8.36.37 AM (1).JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 8.04.28 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 8.05.20 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 8.06.42 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 8.12.29 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 8.36.37 AM (1).JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 8.31.03 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 8.07.04 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "WhatsApp Image 2025-04-20 at 8.06.15 AM.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            {
+                src: "Y.JPEG",
+                title: "Family ",
+                description: "FAMILY"
+            },
+            
+
+            
+
+            
+
+            
+        ];
+        
+        // Function to display photos
+        function displayPhotos() {
+            const gallery = document.getElementById('familyGallery');
+            
+            familyPhotos.forEach(photo => {
+                const photoCard = document.createElement('div');
+                photoCard.className = 'photo-card';
+                
+                photoCard.innerHTML = `
+                    <img src="${photo.src}" alt="${photo.title}" onclick="openModal('${photo.src}')">
+                    <div class="photo-info">
+                        <h3>${photo.title}</h3>
+                        <p>${photo.description}</p>
+                    </div>
+                `;
+                
+                gallery.appendChild(photoCard);
+            });
+        }
+        
+        // Modal functionality
+        function openModal(src) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = "block";
+            modalImg.src = src;
+        }
+        
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('imageModal').style.display = "none";
+        }
+        
+        // Upload form toggle
+        document.getElementById('showUploadForm').addEventListener('click', function() {
+            const form = document.getElementById('uploadForm');
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Chat functionality
+        document.getElementById('sendMessage').addEventListener('click', sendMessage);
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+        
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                const chatMessages = document.getElementById('chatMessages');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message user-message';
+                messageDiv.textContent = message;
+                chatMessages.appendChild(messageDiv);
+                input.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Simulate response after 1 second
+                setTimeout(() => {
+                    const responses = [
+                        "murakoze kwandikira umuryango",
+                        "uru rubuga nurwabarimbi",
+                        "nurwo gushyiraho amafoto yinzibutso",
+                        "twese turumwe",
+                        "tugomba kumenya ubwenge"
+                    ];
+                    const responseDiv = document.createElement('div');
+                    responseDiv.className = 'message other-message';
+                    responseDiv.textContent = responses[Math.floor(Math.random() * responses.length)];
+                    chatMessages.appendChild(responseDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+        }
+        
+        // Call the function when page loads
+        window.onload = displayPhotos;
+    </script>
+</body>
+</html>
